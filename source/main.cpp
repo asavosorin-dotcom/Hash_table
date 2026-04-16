@@ -16,14 +16,14 @@ int main()
     String_t* arrate_words = CreateArrPoint(buffer.buff + 1);
     char* string = strdup("hello!!!\n");
 
-    for (int i = 0; i < count_words - 1;i++)
+    for (int i = 0; i < count_words;i++)
     {
-        printf("%d\n", counter++);
-        HashTableAppendElem(&table1, arrate_words[i].str, hash_func_1);
+        //printf("%d\n", counter++);
+        HashTableAppendElem(&table1, arrate_words[i].str, hash_func_0);
     }
-    printf("\n after append\n\n");
-//    HashTableAppendElem(&table1, string, hash_func_1);  
-    counter = 0;
+
+    HashTablePrint(&table1);
+
     //for (int i = 0; i < 10; i++)
     //{
       //  printf("\n in dump [%d]\n\n", counter);

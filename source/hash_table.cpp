@@ -27,6 +27,11 @@ void HashTableAppendElem(HashTable_t* table, char* elem, int hash_func(HashTable
     LISTAppendAfter(table->arrate_list[index], 0, elem);
 }
 
+int hash_func_0 (HashTable_t* table, const char* elem)
+{
+    return 0;
+}
+
 int hash_func_1 (HashTable_t* table, const char* elem)
 {
     int hash = 0;
@@ -47,7 +52,7 @@ int hash_func_1 (HashTable_t* table, const char* elem)
     return hash;
 }
 
-char* HashTableGetElem(HashTable_t* table, char* elem, int hash_func(HashTable_t*, const char*))
+char* HashTableSearchElem(HashTable_t* table, char* elem, int hash_func(HashTable_t*, const char*))
 {
     int index = hash_func(table, elem);
     List_t list = table->arrate_list[index];
@@ -64,4 +69,26 @@ char* HashTableGetElem(HashTable_t* table, char* elem, int hash_func(HashTable_t
     }
 
     return NULL;
+}
+
+void HashTablePrint(HashTable_t* table)
+{
+    FILE* exel_table = fopen("./debug/table.csv", "a");
+    List_t* list = &table->arrate_list[0];
+    char* elem = list->data[0];
+
+    for (int i = 0; i < table->capasity; i++)
+    {
+        list = &table->arrate_list[i];
+
+        for (int index_in_list = 0; elem != NULL; index_in_list++) 
+        {
+            fprintf(exel_table, "%s\t", elem);
+            elem = list->data[index_in_list];
+        }
+
+        fputc('\n', exel_table);
+    }
+
+    fclose(exel_table);
 }
