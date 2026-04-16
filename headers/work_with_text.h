@@ -1,0 +1,55 @@
+#ifndef _WORK_
+#define _WORK_
+
+#include <stdio.h>
+#include <assert.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+#include "colors.h"
+
+typedef struct { 
+    char* str;
+    char* str_end;
+} String_t;
+
+typedef struct { // поменять назад тип буфера
+    int* buff;
+    size_t buff_size;
+} BufferBin;
+
+
+//' ', ' ', 5
+
+//sscanf(buff + i, "%d"
+//%n
+
+typedef struct {
+    char* buff;
+    size_t buff_size;
+} Buffer;
+
+size_t SizeOfFile(const char* filename);
+size_t Maxlen(char* buffer);
+
+size_t CountStr(const char* buffer);
+size_t CountWords(const char* buffer);
+
+void   OutPutBuf(char* buffer, FILE* fileout, size_t numOfElemNew);
+String_t* CreateArrPoint(char* buffer);
+
+char* skip_space(char* buffer);
+char* skip_space_end(char* buffer_left, char* buffer_right);
+
+Buffer CreateBuffer(const char* filename);
+BufferBin CreateBufferBinary(const char* filename);
+
+void MakeCleanText(const char* filename);
+
+#define PRINT_DEBUG(COLOR, ...) printf(COLOR "%s:%d ", __FILE__, __LINE__); printf(__VA_ARGS__); printf(RESET)
+
+#endif

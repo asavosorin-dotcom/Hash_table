@@ -8,5 +8,6 @@
 #include "hash_table.h"
 #include "list.h"
 #include "colors.h"
+#include "work_with_text.h"
 
 #endif
