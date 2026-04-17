@@ -28,7 +28,6 @@ void ListDtor(List_t* list)
     free(list->next);
     free(list->prev);
 
-
     list->free = 1;
 }
 
@@ -40,14 +39,10 @@ int ListAppendAfter (List_t* list, int index, char* elem ONDEBUG_LIST(, const ch
     ONDEBUG_LIST(ListVerify(list, __LINE__, __func__));
     ONDEBUG_LIST(ListIndexVerify(list, index, filename, line));
 
-    #ifdef DEBUG_LIST
-
     if (list->count_elem == list->size - 2)
     {
         ListReallocUp(list);
     }
-
-    #endif
     // printf("old_free = %d\n", list->free);
     list->data[list->free] = elem;
     nextfree = list->next[list->free];
@@ -157,7 +152,7 @@ void ListDataInit(List_t* list)
     
     for (size_t i = 0; i < list->size; i++)
     {
-        list->data[i] = 0;
+        list->data[i] = NULL;
     }
     
 }
@@ -423,7 +418,7 @@ void ListDump (List_t* list, const char* text)
 
     PRINT_HTM("\t      ");
 
-    for (size_t i = 0; i < list->size; i++)
+    for (size_t i = 0; (i < list->size) && (i < 10); i++)
     {
     PRINT_HTM("%3zu ", i);
     }
@@ -431,7 +426,7 @@ void ListDump (List_t* list, const char* text)
     PRINT_HTM("\n");
     PRINT_HTM("\tDATA: ");
 
-    for (size_t i = 0; i < list->size; i++)
+    for (size_t i = 0; (i < list->size) && (i < 10); i++)
     {
         PRINT_HTM("%s ", list->data[i]);
     }
@@ -440,7 +435,7 @@ void ListDump (List_t* list, const char* text)
 
     PRINT_HTM("\tNEXT: ");
 
-    for (size_t i = 0; i < list->size; i++)
+    for (size_t i = 0;(i < list->size) && (i < 10); i++)
     {
         PRINT_HTM("%3d ", list->next[i]);
     }
@@ -449,7 +444,7 @@ void ListDump (List_t* list, const char* text)
 
     PRINT_HTM("\tPREV: ");
 
-    for (size_t i = 0; i < list->size; i++)
+    for (size_t i = 0; (i < list->size) && (i < 10); i++)
     {
         PRINT_HTM("%3d ", list->prev[i]);
     }
