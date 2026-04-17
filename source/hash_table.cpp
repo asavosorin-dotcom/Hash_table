@@ -85,7 +85,6 @@ void HashTablePrint(HashTable_t* table)
         {
             elem = list->data[index_in_list];
             fprintf(exel_table, "%s\t", elem);
-            printf("word = %s\t", elem);
         }
 
         fputc('\n', exel_table);
