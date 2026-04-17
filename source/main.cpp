@@ -21,7 +21,7 @@ int main()
         //printf("%d\n", counter++);
         HashTableAppendElem(&table1, arrate_words[i].str, hash_func_0);
     }
-
+    ListDump(&table1.arrate_list[0], "debug");
     HashTablePrint(&table1);
 
     //for (int i = 0; i < 10; i++)
