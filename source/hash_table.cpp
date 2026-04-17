@@ -81,13 +81,15 @@ void HashTablePrint(HashTable_t* table)
     {
         list = &table->arrate_list[i];
 
-        for (int index_in_list = 1; elem != NULL; index_in_list++) 
+        int index_in_list = 1;
+
+        for (; elem != NULL; index_in_list++) 
         {
             elem = list->data[index_in_list];
-            fprintf(exel_table, "%s\t", elem);
+            //fprintf(exel_table, "%s\t", elem);
         }
-
-        fputc('\n', exel_table);
+        
+        fprintf(exel_table, "%d\t", index_in_list - 1);
     }
 
     fclose(exel_table);
