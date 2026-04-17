@@ -24,6 +24,14 @@ void HashTableAppendElem(HashTable_t* table, char* elem, int hash_func(HashTable
 {
     int index = hash_func(table, elem);
     //printf("index = %d\n", index);
+    List_t list = table->arrate_list[index];
+    char* list_elem = list.data[1];
+
+    for (int index_elem = 1; list_elem != NULL; list_elem = list.data[index_elem++])
+    {
+        if (strcmp(list_elem, elem) == 0) return ;
+    }
+
     LISTAppendAfter(table->arrate_list[index], 0, elem);
 }
 
