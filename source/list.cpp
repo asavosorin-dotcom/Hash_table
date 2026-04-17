@@ -451,7 +451,7 @@ void ListDump (List_t* list, const char* text)
 
     PRINT_HTM("\n");
 
-    ListDumpImage(list);
+//    ListDumpImage(list);
 
     PRINT_HTM("Image: \n <img src= \"pictures/graph%d.png\" width = \"1000\" height = \"200\">", index_png - 1);
 
