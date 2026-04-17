@@ -73,18 +73,19 @@ char* HashTableSearchElem(HashTable_t* table, char* elem, int hash_func(HashTabl
 
 void HashTablePrint(HashTable_t* table)
 {
-    FILE* exel_table = fopen("./debug/table.csv", "a");
+    FILE* exel_table = fopen("./debug/table.csv", "w");
     List_t* list = &table->arrate_list[0];
-    char* elem = list->data[0];
+    char* elem = list->data[1];
 
     for (int i = 0; i < table->capasity; i++)
     {
         list = &table->arrate_list[i];
 
-        for (int index_in_list = 0; elem != NULL; index_in_list++) 
+        for (int index_in_list = 1; elem != NULL; index_in_list++) 
         {
-            fprintf(exel_table, "%s\t", elem);
             elem = list->data[index_in_list];
+            fprintf(exel_table, "%s\t", elem);
+            printf("word = %s\t", elem);
         }
 
         fputc('\n', exel_table);
