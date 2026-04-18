@@ -40,7 +40,7 @@ int hash_func_0 (HashTable_t* table, const char* elem)
     return 0;
 }
 
-int hash_func_1 (HashTable_t* table, const char* elem)
+int hash_func_sum (HashTable_t* table, const char* elem)
 {
     int hash = 0;
 //    FILE* log = fopen("log.txt", "w");
@@ -57,6 +57,33 @@ int hash_func_1 (HashTable_t* table, const char* elem)
     // printf("hash = %d\n", hash);
 
 //    fclose(log);
+    return hash;
+}
+
+int hash_func_first_letter(HashTable_t* table, const char* elem)
+{
+    int hash = *elem %  table->capasity;
+    return hash;
+}
+
+int hash_func_strlen(HashTable_t* table, const char* elem)
+{
+    int hash = strlen(elem) % table->capasity;
+    return hash;
+}
+
+int hash_func_roll(HashTable_t* table, const char* elem)
+{
+    int hash = 0;
+    int mask = 0;
+
+    while (*elem != '\0')
+    {
+        mask = hash & (1 << 31);
+        hash = (hash << 1) + mask;
+    }
+
+    hash = hash % table->capasity;
     return hash;
 }
 
@@ -88,6 +115,7 @@ void HashTablePrint(HashTable_t* table)
     for (int i = 0; i < table->capasity; i++)
     {
         list = &table->arrate_list[i];
+        elem = list->data[1];
 
         int index_in_list = 1;
 
@@ -96,7 +124,6 @@ void HashTablePrint(HashTable_t* table)
             elem = list->data[index_in_list];
             //fprintf(exel_table, "%s\t", elem);
         }
-        
         fprintf(exel_table, "%d\t", index_in_list - 1);
     }
 
