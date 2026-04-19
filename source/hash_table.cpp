@@ -20,9 +20,9 @@ void HashTableDtor(HashTable_t* table)
     free(table->arrate_list);    
 }
 
-void HashTableAppendElem(HashTable_t* table, char* elem, int hash_func(HashTable_t*, const char*))
+void HashTableAppendElem(HashTable_t* table, char* elem, uint32_t hash_func(HashTable_t*, const char*))
 {
-    int index = hash_func(table, elem);
+    uint32_t index = hash_func(table, elem);
     //printf("index = %d\n", index);
     List_t list = table->arrate_list[index];
     char* list_elem = list.data[1];
@@ -35,14 +35,14 @@ void HashTableAppendElem(HashTable_t* table, char* elem, int hash_func(HashTable
     LISTAppendAfter(table->arrate_list[index], 0, elem);
 }
 
-int hash_func_0 (HashTable_t* table, const char* elem)
+uint32_t hash_func_0 (HashTable_t* table, const char* elem)
 {
     return 0;
 }
 
-int hash_func_sum (HashTable_t* table, const char* elem)
+uint32_t hash_func_sum (HashTable_t* table, const char* elem)
 {
-    int hash = 0;
+    uint32_t hash = 0;
 //    FILE* log = fopen("log.txt", "w");
 //    printf("[%s] \"\n", elem);
     while(*elem != '\0')
@@ -60,34 +60,59 @@ int hash_func_sum (HashTable_t* table, const char* elem)
     return hash;
 }
 
-int hash_func_first_letter(HashTable_t* table, const char* elem)
+uint32_t hash_func_first_letter(HashTable_t* table, const char* elem)
 {
-    int hash = *elem %  table->capasity;
+    uint32_t hash = *elem %  table->capasity;
     return hash;
 }
 
-int hash_func_strlen(HashTable_t* table, const char* elem)
+uint32_t hash_func_strlen(HashTable_t* table, const char* elem)
 {
-    int hash = strlen(elem) % table->capasity;
+    uint32_t hash = strlen(elem) % table->capasity;
     return hash;
 }
 
-int hash_func_roll(HashTable_t* table, const char* elem)
+uint32_t hash_func_roll(HashTable_t* table, const char* elem)
 {
-    int hash = 0;
-    int mask = 0;
+    uint32_t hash = 0;
+    uint32_t mask = 0;
 
     while (*elem != '\0')
     {
         mask = hash & (1 << 31);
         hash = (hash << 1) + mask;
+        hash ^= *elem++;
     }
 
     hash = hash % table->capasity;
     return hash;
 }
 
-char* HashTableSearchElem(HashTable_t* table, char* elem, int hash_func(HashTable_t*, const char*))
+uint32_t hash_func_crc32(HashTable_t* table, const char* elem)
+{
+    uint32_t hash_table[256] = {};
+    uint32_t hash = 0;
+
+    for (int i = 0; i < 256; i++)
+    {
+        hash = i;
+        for (int j = 0; j < 8; j++)
+            hash = hash & 1 ? (hash >> 1) ^ 0xEDB88320UL : hash >> 1;
+
+        hash_table[i] = hash;
+    };
+
+    hash = 0xFFFFFFFFUL;
+
+    while (*elem != '\0')
+        hash = hash_table[(hash ^ *elem++) & 0xFF] ^ (hash >> 8);
+    
+    hash ^= 0xFFFFFFFFUL;
+    return hash % table->capasity;
+}
+
+
+char* HashTableSearchElem(HashTable_t* table, char* elem, uint32_t hash_func(HashTable_t*, const char*))
 {
     int index = hash_func(table, elem);
     List_t list = table->arrate_list[index];
