@@ -27,9 +27,10 @@ void HashTableAppendElem(HashTable_t* table, char* elem, uint32_t hash_func(Hash
     List_t list = table->arrate_list[index];
     char* list_elem = list.data[1];
 
-    for (int index_elem = 1; list_elem != NULL; list_elem = list.data[index_elem++])
+    for (int index_elem = 1; list_elem != NULL; index_elem++)
     {
         if (strcmp(list_elem, elem) == 0) return ;
+        list_elem = list.data[index_elem];
     }
 
     LISTAppendAfter(table->arrate_list[index], 0, elem);
@@ -112,20 +113,21 @@ uint32_t hash_func_crc32(HashTable_t* table, const char* elem)
 }
 
 
-char* HashTableSearchElem(HashTable_t* table, char* elem, uint32_t hash_func(HashTable_t*, const char*))
+char* HashTableSearchElem(HashTable_t* table, const char* elem, uint32_t hash_func(HashTable_t*, const char*))
 {
     int index = hash_func(table, elem);
-    List_t list = table->arrate_list[index];
-    int index_in_list = 0;
+    
+    List_t* list = &table->arrate_list[index];
+    int index_in_list = list->next[0];
 
-    while (list.data[index_in_list] != NULL)
+    while (list->data[index_in_list] != NULL)
     {
-        if (strcmp(elem, list.data[index_in_list]) == 0)
+        if (strcmp(elem, list->data[index_in_list]) == 0)
         {
-            return list.data[index_in_list];
+            return list->data[index_in_list];
         }
     
-        index_in_list = list.next[index_in_list];
+        index_in_list = list->next[index_in_list];
     }
 
     return NULL;
