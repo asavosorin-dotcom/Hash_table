@@ -10,4 +10,6 @@
 #include "colors.h"
 #include "work_with_text.h"
 
+#define HASH_FUNC hash_func_crc32_s       
+
 #endif
