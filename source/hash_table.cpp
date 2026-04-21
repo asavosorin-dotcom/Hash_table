@@ -1,4 +1,5 @@
 #include "../headers/hash_table.h"
+#include <smmintrin.h>
 
 void HashTableCtor(HashTable_t* table, int capasity)
 {
@@ -119,15 +120,21 @@ char* HashTableSearchElem(HashTable_t* table, const char* elem, uint32_t hash_fu
     
     List_t* list = &table->arrate_list[index];
     int index_in_list = list->next[0];
+    char* data_elem = list->data[index_in_list];
 
-    while (list->data[index_in_list] != NULL)
+    while (data_elem != NULL)
     {
-        if (strcmp(elem, list->data[index_in_list]) == 0)
+        __m128i elem_vec = _mm_loadu_si128((__m128i*) elem);
+        __m128i data_elem_vec = _mm_loadu_si128((__m128i*) elem);
+
+        if (_mm_cmpistrz(elem_vec, data_elem_vec, _SIDD_UBYTE_OPS) == 0)
+        //if (strcmp(elem, data_elem) == 0)
         {
-            return list->data[index_in_list];
+            return data_elem;
         }
     
         index_in_list = list->next[index_in_list];
+        data_elem = list->data[index_in_list];
     }
 
     return NULL;

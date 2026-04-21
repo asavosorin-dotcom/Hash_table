@@ -12,7 +12,7 @@ hash_table: $(addprefix $(OBJECTS_DIR), $(OBJECTS_LIST))
 	@echo ----------------------------------------------------
 
 $(OBJECTS_DIR)%.o: $(SOURCE_DIR)%.cpp
-	g++ -c $< -o $@
+	g++ -msse4.2 -msse2 -c $< -o $@
 
 clean_text: $(addprefix $(OBJECTS_DIR), $(OBJECTS_LIST_CLEAN))
 	@echo ----------------------------------------------------
