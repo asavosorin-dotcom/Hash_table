@@ -91,17 +91,17 @@ uint32_t hash_func_roll(HashTable_t* table, const char* elem)
 
 uint32_t hash_func_crc32(HashTable_t* table, const char* elem)
 {
-    uint32_t hash_table[256] = {};
+    #include "../headers/crc_table.h"
     uint32_t hash = 0;
 
-    for (int i = 0; i < 256; i++)
-    {
-        hash = i;
-        for (int j = 0; j < 8; j++)
-            hash = hash & 1 ? (hash >> 1) ^ 0xEDB88320UL : hash >> 1;
-
-        hash_table[i] = hash;
-    };
+//    for (int i = 0; i < 256; i++)
+//    {
+//        hash = i;
+//        for (int j = 0; j < 8; j++)
+//            hash = hash & 1 ? (hash >> 1) ^ 0xEDB88320UL : hash >> 1;
+//
+//        hash_table[i] = hash;
+//    };
 
     hash = 0xFFFFFFFFUL;
 
@@ -144,14 +144,9 @@ void HashTablePrint(HashTable_t* table)
         list = &table->arrate_list[i];
         elem = list->data[1];
 
-        int index_in_list = 1;
+        int index_in_list = list->next[0];
 
-        for (; elem != NULL; index_in_list++) 
-        {
-            elem = list->data[index_in_list];
-            //fprintf(exel_table, "%s\t", elem);
-        }
-        fprintf(exel_table, "%d\t", index_in_list - 1);
+        fprintf(exel_table, "%d\t", index_in_list );
     }
 
     fclose(exel_table);
