@@ -28,16 +28,9 @@ int main()
         for (int i = 0; i < 35000; i++)
         {
             char* elem = HashTableSearchElem(&table1, arrate_words[i].str, HASH_FUNC);
-    //        if (elem) printf("[%d] %s\n", i, elem);
         }
     }
-     //for (int i = 0; i < 10; i++)
-    //{
-      //  printf("\n in dump [%d]\n\n", counter);
 
-        //ListDumpImage(&table1.arrate_list[i]);
-//        ListDump(&table1.arrate_list[0], "hello hash!"); 
-    //}
     free(arrate_words);
     free(buffer.buff);
     fclose(file_htm);
