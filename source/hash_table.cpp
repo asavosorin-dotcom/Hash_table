@@ -132,8 +132,16 @@ char* HashTableSearchElem(HashTable_t* table, const char* elem, uint32_t hash_fu
         {
             return data_elem;
         }
-    
-        index_in_list = list->next[index_in_list];
+       // .intel_syntax noprefix        
+        __asm__(".intel_syntax noprefix;"
+                "mov rdi, [rdi + 8];"
+                "mov rax, [rdi + rsi * 4];"
+                 ".att_syntax prefix;"
+                : "=a" (index_in_list)
+                : "D" (list), "S" (index_in_list)
+                );
+
+//        index_in_list = list->next[index_in_list];
         data_elem = list->data[index_in_list];
     }
 
