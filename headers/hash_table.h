@@ -5,10 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#include <nmmintrin.h>
+#include <immintrin.h>
 
 #include "list.h"
-
 
 typedef struct 
 {
