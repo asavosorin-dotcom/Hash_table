@@ -133,7 +133,7 @@ char* HashTableSearchElem(HashTable_t* table, const char* elem, uint32_t hash_fu
             return data_elem;
         }
        // .intel_syntax noprefix        
-        __asm__ volatile (".intel_syntax noprefix;"
+        __asm__ (".intel_syntax noprefix;"
                 "mov rdi, [rdi + 8];"
                 "mov rax, [rdi + rsi * 4];"
                  ".att_syntax prefix;"
@@ -141,7 +141,7 @@ char* HashTableSearchElem(HashTable_t* table, const char* elem, uint32_t hash_fu
                 : "D" (list), "S" (index_in_list)
                 );
 
-        __asm__ volatile (".intel_syntax noprefix;"
+        __asm__  (".intel_syntax noprefix;"
                 "mov rdi, [rdi];"
                 "mov rax, [rdi + rsi * 4];"
                  ".att_syntax prefix;"
