@@ -1,6 +1,6 @@
 #include "../headers/main.h" 
 extern FILE* file_htm;
-extern uint32_t (*hash_func_array[HASH_FUNC_CAPASITY]) (HashTable_t* , const char*); 
+extern uint32_t (*hash_func_array[HASH_FUNC_SIZE]) (HashTable_t* , const char*); 
 
 int main()
 {
@@ -18,7 +18,6 @@ int main()
         word = array_words[i].str;
     }
 
-//    ListDump(&table1.array_list[1], "debug");
     HashTablePrint(&table1); 
 
     int counter = 1000;

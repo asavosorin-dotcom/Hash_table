@@ -36,11 +36,10 @@ uint32_t hash_func_mul          (HashTable_t* table, const char* elem);
 
 void HashTablePrint(HashTable_t* table);
 
-
 #define SIZE_LIST 10
 #define HASH_TABLE_SIZE 4001
 
-#define HASH_FUNC_CAPASITY 10 
+#define HASH_FUNC_SIZE 10 
 #define HASH_FUNC hash_func_crc32_s
 
 #endif
