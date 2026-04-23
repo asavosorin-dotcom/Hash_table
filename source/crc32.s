@@ -39,7 +39,7 @@ hash_func_crc32_s:
 	add rdi, 8 ; считаем адрес capsity
 
 	xor rdx, rdx
-	mov rcx, [rdi] ; достаем capasity
+	mov rcx, [rdi] ; достаем capacity
 	div rcx
 	mov rax, rdx
 	
